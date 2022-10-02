@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const validator = require("validator");
 const { ObjectId } = mongoose.Schema.Types;
 // schema design
 const productSchema = mongoose.Schema(
@@ -32,15 +33,20 @@ const productSchema = mongoose.Schema(
         required: true,
         validate: {
           validator: (value) => {
-            if (!Array.isArray(value)) {
-              return false;
-            }
+            // if (!Array.isArray(value)) {
+            //   return false;
+            // }
             let isValid = true;
-            value.forEach((url) => {
-              if (!validator.isURL(url)) {
-                isValid = false;
-              }
-            });
+            // value.forEach((url) => {
+            //   if (!validator.isURL(url)) {
+            //     isValid = false;
+            //   }
+            // });
+
+            if (!validator.isURL(value)) {
+              isValid = false;
+            }
+
             return isValid;
           },
           message: "Please provide valid image urls",
