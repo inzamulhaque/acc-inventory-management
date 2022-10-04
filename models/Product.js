@@ -78,7 +78,6 @@ const productSchema = mongoose.Schema(
 
 productSchema.pre("save", function (next) {
   //this ->
-  console.log(" Before saving data");
   if (this.quantity == 0) {
     this.status = "out-of-stock";
   }

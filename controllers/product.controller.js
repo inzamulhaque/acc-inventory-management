@@ -11,7 +11,6 @@ exports.getProducts = async (req, res, next) => {
   try {
     //{price:{$ gt:50}
     //{ price: { gt: '50' } }
-    console.log(req.query);
 
     let filters = { ...req.query };
 
@@ -34,13 +33,11 @@ exports.getProducts = async (req, res, next) => {
       // price,qunatity   -> 'price quantity'
       const sortBy = req.query.sort.split(",").join(" ");
       queries.sortBy = sortBy;
-      console.log(sortBy);
     }
 
     if (req.query.fields) {
       const fields = req.query.fields.split(",").join(" ");
       queries.fields = fields;
-      console.log(fields);
     }
 
     if (req.query.page) {
@@ -79,8 +76,6 @@ exports.createProduct = async (req, res, next) => {
 
     const result = await createProductService(req.body);
 
-    console.log(result);
-
     // result.logger();
 
     res.status(200).json({
@@ -117,7 +112,6 @@ exports.updateProductById = async (req, res, next) => {
 
 exports.bulkUpdateProduct = async (req, res, next) => {
   try {
-    console.log(req.body);
     const result = await bulkUpdateProductService(req.body);
 
     res.status(200).json({
@@ -161,7 +155,6 @@ exports.deleteProductById = async (req, res, next) => {
 
 exports.bulkDeleteProduct = async (req, res, next) => {
   try {
-    console.log(req.body);
     const result = await bulkDeleteProductService(req.body.ids);
 
     res.status(200).json({
