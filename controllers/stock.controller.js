@@ -1,6 +1,7 @@
 const {
   createStockService,
   getStocksService,
+  getStockByIdService,
 } = require("../services/stock.service");
 
 exports.getStocks = async (req, res, next) => {
@@ -103,18 +104,27 @@ exports.updateProductById = async (req, res, next) => {
   }
 };
 
-exports.bulkUpdateProduct = async (req, res, next) => {
+exports.getStockById = async (req, res, next) => {
   try {
-    const result = await bulkUpdateProductService(req.body);
+    const { id } = req.params;
+    const result = await getStockByIdService(id);
+
+    if (!result) {
+      return res.status(400).json({
+        status: "fail",
+        message: "Couldn't get the stock with this ID",
+      });
+    }
 
     res.status(200).json({
       stauts: "success",
-      message: "Successfully updated the product",
+      message: "Successfully get the stock",
+      stock: result,
     });
   } catch (error) {
     res.status(400).json({
       status: "fail",
-      message: "Couldn't update the product",
+      message: "Couldn't get the stock with this ID",
       error: error.message,
     });
   }
