@@ -105,6 +105,19 @@ userSchema.methods.comparePassword = function (password, hash) {
   return isPasswordValid;
 };
 
+userSchema.methods.generateConfirmationToken = function () {
+  const token = crypto.randomBytes(32).toString("hex");
+
+  this.confirmationToken = token;
+
+  const date = new Date();
+
+  date.setDate(date.getDate() + 1);
+  this.confirmationTokenExpires = date;
+
+  return token;
+};
+
 const User = mongoose.model("User", userSchema);
 
 module.exports = User;
@@ -126,21 +139,23 @@ module.exports = User;
 
 //for manager
 /*
-"name":"Manager",
-"email":"managerctg@test.com",
-"password":"mezba123456##",
-"confirmPassword":"mezba123456##",
-"firtsName":"Manager of",
-"lastName":"CTG",
-"contactNumber":"11111111111",
-"shippingAddress:"944 osthir Street",
-"division":"chattogram",
-"imageURL":"https://i.ibb.co/WnFSs9Y/unnamed.webp",
-"status":"active",
-"emergencyContactNumber":"01712345678",
-"presentAddress":"944 osthir Street",
-"permanentAddress":"944 Russell Street",
-"nationalIdImageURL":"https://i.ibb.co/WnFSs9Y/unnamed.webp",
+{
+  "role": "store-manager",
+  "email": "managerctg@test.com",
+  "password": "Mezba123456##",
+  "confirmPassword": "Mezba123456##",
+  "firstName": "Manager of",
+  "lastName": "CTG",
+  "contactNumber": "11111111111",
+  "shippingAddress": "944 osthir Street",
+  "division": "chattogram",
+  "imageURL": "https://i.ibb.co/WnFSs9Y/unnamed.webp",
+  "status": "active",
+  "emergencyContactNumber": "01712345678",
+  "presentAddress": "944 osthir Street",
+  "permanentAddress": "944 Russell Street",
+  "nationalIdImageURL": "https://i.ibb.co/WnFSs9Y/unnamed.webp"
+},
 
 
 
